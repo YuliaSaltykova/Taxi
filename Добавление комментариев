@@ -1,0 +1,79 @@
+using System;
+
+namespace ProgramTaxi
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Пожалуйста введите количество сотрудников");
+            int NumberWorkers = Convert.ToInt32(Console.ReadLine());//количество сотрудников
+            int[] Distance = new int[NumberWorkers];//дистанция
+            int[] TaxiCost = new int[NumberWorkers];//цена за километр
+            Console.WriteLine("Введите дистанции "+ NumberWorkers +" работников до дома до 1000");
+            for (int i = 0; i < NumberWorkers; i++)  
+            {
+                Distance[i] = Convert.ToInt32(Console.ReadLine());
+            }
+            Console.WriteLine("Введите цену за киллометр до 10000");
+            for (int i = 0; i < NumberWorkers; i++)
+            {
+                TaxiCost[i] = Convert.ToInt32(Console.ReadLine());
+            }
+            int[] DistanceTest = new int[NumberWorkers];
+            int[] TaxiCostTest = new int[NumberWorkers];
+            int[] ID = new int[NumberWorkers];
+            int[] TaxiID = new int[NumberWorkers];
+
+            for (int j = 0; j < NumberWorkers; j++)
+            {
+                DistanceTest[j] = Distance[j];
+                TaxiCostTest[j] = TaxiCost[j];                      
+                ID[j] = j + 1;
+                TaxiID[j] = j + 1;
+            }
+
+            Console.WriteLine("");
+
+            for (int i = 0; i < NumberWorkers; i++)
+            {
+                int minDistance = 1000000000;
+                int maxCost = -1;
+                for (int j = 0; j < NumberWorkers; j++)
+                {
+
+                    if (DistanceTest[j] <=minDistance && DistanceTest[j] != -1)                            
+                    {
+                        minDistance = DistanceTest[j];
+                        Distance[i] = minDistance;
+                        ID[i] = j + 1;
+
+                    }
+
+                    if (maxCost < TaxiCostTest[j] && TaxiCostTest[j] != -1)
+                    {
+                        maxCost = TaxiCostTest[j];
+                        TaxiCost[i] = maxCost;
+                        TaxiID[i] = j + 1;
+
+                    }
+                }
+                DistanceTest[ID[i] - 1] = -1;
+                TaxiCostTest[TaxiID[i] - 1] = -1;
+
+            }
+
+            for (int i = 0; i < NumberWorkers; i++)
+            {
+                for (int j = 0; j < NumberWorkers; j++)
+                {
+                    if (ID[j] == i+1)
+                    {
+                        Console.WriteLine(TaxiID[j]);//вывод
+                    }
+                }
+            }
+
+        }
+    }
+}
